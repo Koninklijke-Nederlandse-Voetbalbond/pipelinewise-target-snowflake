@@ -1,4 +1,10 @@
+
+import base64
+from cryptography.hazmat.backends import default_backend
+from cryptography.hazmat.primitives import serialization
+
 import json
+import os
 import sys
 import snowflake.connector
 import re
@@ -33,7 +39,6 @@ def validate_config(config):
         'account',
         'dbname',
         'user',
-        'password',
         'warehouse',
         'file_format'
     ]
@@ -290,10 +295,23 @@ class DbSync:
         stream = None
         if self.stream_schema_message:
             stream = self.stream_schema_message['stream']
+        if os.environ.get("TARGET_SNOWFLAKE_PRIVATE_KEY"):
+            private_key = serialization.load_pem_private_key(
+                base64.b64decode(os.environ.get("TARGET_SNOWFLAKE_PRIVATE_KEY")),
+                password=os.environ.get("TARGET_SNOWFLAKE_PRIVATE_KEY_PASSWORD").encode(),
+                backend=default_backend(),
+            )
+
+            self.connection_config["private_key"] = private_key.private_bytes(
+                encoding=serialization.Encoding.DER,
+                format=serialization.PrivateFormat.PKCS8,
+                encryption_algorithm=serialization.NoEncryption(),
+            )
 
         return snowflake.connector.connect(
             user=self.connection_config['user'],
-            password=self.connection_config['password'],
+            password=self.connection_config.get('password'),
+            private_key=self.connection_config.get("private_key"),
             account=self.connection_config['account'],
             database=self.connection_config['dbname'],
             warehouse=self.connection_config['warehouse'],
