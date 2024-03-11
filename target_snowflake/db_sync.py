@@ -317,6 +317,9 @@ class DbSync:
             warehouse=self.connection_config['warehouse'],
             role=self.connection_config.get('role', None),
             autocommit=True,
+            login_timeout=30,
+            network_timeout=30,
+            socket_timeout=10,
             session_parameters={
                 # Quoted identifiers should be case sensitive
                 'QUOTED_IDENTIFIERS_IGNORE_CASE': 'FALSE',
