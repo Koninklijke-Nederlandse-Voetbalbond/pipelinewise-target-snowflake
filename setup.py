@@ -26,6 +26,7 @@ setup(name="pipelinewise-target-snowflake",
           'snowflake-connector-python[pandas]==3.5.0',
           'inflection==0.5.1',
           'joblib==1.2.0',
+          'numpy==1.26.4',
           'boto3==1.28.20',
       ],
       extras_require={
