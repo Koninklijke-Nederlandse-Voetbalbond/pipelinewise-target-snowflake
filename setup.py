@@ -36,7 +36,8 @@ setup(name="pipelinewise-target-snowflake",
           "cryptography==3.4.8",
           "packaging==23.2",
           "charset-normalizer==3.2.0",
-          "certifi==2024.6.2"
+          "certifi==2024.6.2",
+          "sortedcontainers==2.4.0"
       ],
       extras_require={
           "test": [
