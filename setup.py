@@ -30,7 +30,8 @@ setup(name="pipelinewise-target-snowflake",
           'boto3==1.28.20',
           'jsonschema==3.2.0',
           'attrs==23.2.0',
-          'six==1.14.0'
+          'six==1.14.0',
+          'python-dateutil==2.8.2',
       ],
       extras_require={
           "test": [
