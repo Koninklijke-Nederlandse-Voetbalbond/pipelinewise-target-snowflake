@@ -32,6 +32,7 @@ setup(name="pipelinewise-target-snowflake",
           'attrs==23.2.0',
           'six==1.14.0',
           'python-dateutil==2.8.2',
+          'cffi==1.15.0',
       ],
       extras_require={
           "test": [
